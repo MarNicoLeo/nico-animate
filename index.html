@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Kontext: A context-shift transition inspired by iOS</title>
+
+    <meta name="description"
+          content="A context-shift transition inspired by iOS. Created using JavaScript, CSS 3D transforms and CSS Animations.">
+    <meta name="author" content="Hakim El Hattab">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!--<link rel="stylesheet" href="css/vertical.css">-->
+    <link rel="stylesheet" href="css/kontext.css">
+    <link rel="stylesheet" href="css/demo.css">
+
+</head>
+<body>
+
+<article class="kontext">
+    <!--<div class="layer one show">-->
+        <!--<iframe src="https://www.baidu.com" style="width: 100%;height: 100%;"></iframe>-->
+        <!--&lt;!&ndash;<h2>Layer One</h2>&ndash;&gt;-->
+    <!--</div>-->
+    <div class="layer  show">
+        <iframe src="https://www.taobao.com" style="width: 100%;height: 100%;"></iframe>
+        <!--<h2>Layer Two</h2>-->
+    </div>
+    <div class="layer">
+        <iframe src="https://www.tencent.com" style="width: 100%;height: 100%;"></iframe>
+        <!--<h2>Layer Three</h2>-->
+    </div>
+    <div class="layer">
+        <iframe src="https://3.cn" style="width: 100%;height: 100%;"></iframe>
+        <!--<h2>Layer Three</h2>-->
+    </div>
+    <div class="layer">
+        <iframe src="https://www.baidu.com" style="width: 100%;height: 100%;background-color:#fff;"></iframe>
+    </div>
+</article>
+<ul class="bullets"></ul>
+
+<script src="js/kontext.js"></script>
+<script>
+    // Create a new instance of kontext
+    var k = kontext(document.querySelector('.kontext'));
+
+
+    // API METHODS:
+
+    // k.prev(); // Show prev layer
+    // k.next(); // Show next layer
+    // k.show( 3 ); // Show specific layer
+    // k.getIndex(); // Index of current layer
+    // k.getTotal(); // Total number of layers
+
+
+    // DEMO-SPECIFIC:
+
+    var bulletsContainer = document.body.querySelector('.bullets');
+
+    // Create one bullet per layer
+    for (var i = 0, len = k.getTotal(); i < len; i++) {
+        var bullet = document.createElement('li');
+        bullet.className = i === 0 ? 'active' : '';
+        bullet.setAttribute('index', i);
+        bullet.onclick = function (event) {
+            k.show(event.target.getAttribute('index'))
+        };
+        bullet.ontouchstart = function (event) {
+            k.show(event.target.getAttribute('index'))
+        };
+        bulletsContainer.appendChild(bullet);
+    }
+
+    // Update the bullets when the layer changes
+    k.changed.add(function (layer, index) {
+        var bullets = document.body.querySelectorAll('.bullets li');
+        for (var i = 0, len = bullets.length; i < len; i++) {
+            bullets[i].className = i === index ? 'active' : '';
+        }
+    });
+
+    // 左右键切换
+    document.addEventListener('keyup', function (event) {
+        if (event.keyCode === 37) k.prev();
+        if (event.keyCode === 39) k.next();
+    }, false);
+
+</script>
+</body>
+</html>

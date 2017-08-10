@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .demo {
+            width: 300px;
+            height: 300px;
+            background-color: #f0f;
+            /*-webkit-transform-style: preserve-3d;*/
+        }
+        @-webkit-keyframes leo {
+            0%   { -webkit-transform: translateZ( -200px ); }
+            40%  { -webkit-transform: translate( 40%, 0 ) scale( 0.8 ) rotateY( -20deg ); }
+            100% { -webkit-transform: translateZ( 0px ); }
+        }
+        .nico.demo {
+            -webkit-animation: leo 1s forwards ease;
+        }
+    </style>
+</head>
+<body >
+<button id="btn">动一下</button>
+<div class="demo" id="demo"></div>
+<script>
+    var btn = document.getElementById('btn');
+    var demo = document.getElementById('demo');
+    var body = document.querySelector('body');
+    btn.onclick = function () {
+        demo.classList.toggle('nico');
+
+    }
+    body.addEventListener('touchmove',function (e) {
+        alert(e.touches[0].clientX);
+        alert(e.touches[0].clientY);
+    })
+</script>
+</body>
+</html>
